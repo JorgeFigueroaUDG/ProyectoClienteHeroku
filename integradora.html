@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <title>Integradora 1. Agregación de eventos de forma dinámica</title>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8"/>
+    </head>
+    <body onload="inicializar()">
+
+        <div class="main">
+            <p class="sign" align="center">Integradora 1. Agregación de eventos de forma dinámica</p>
+            
+            <form class="form1" action="iniciada.php" method="POST"><br>
+              <input class="un " type="text" align="center" id="name" placeholder="Nombre" required name="name"><br>
+              <input class="un " type="email" align="center" id="email" placeholder="Correo electronico" required name="email"><br>
+              <input class="pass" type="password" align="center" placeholder="Contraseña" required name="pass" id="password"><br>
+              
+              <p class="sign" align="left">Escoge tu color favorito</p>
+              <input align="center" type="checkbox" name="color[]" value="1" checked>Negro<br>
+              <input align="center" type="checkbox" name="color[]" value="2" >Blanco<br>
+              <input align="center" type="checkbox" name="color[]" value="3" >Azul<br>
+              <input align="center" type="checkbox" name="color[]" value="4" >Amarillo<br>
+              <input align="center" type="checkbox" name="color[]" value="5" >Verde<br>
+              <br>
+              <div class="buttonsEventsDiv">
+                <textarea name="textarea" rows="10" cols="40" class="textAreaColor" placeholder="Otro color y especificaciones"></textarea>
+              </div>
+                <br><br>
+                <div class="buttonsEventsDiv">
+                <select>
+                  <option value="0">Selecciona la agencia de tu vehiculo:</option>
+                  <option value="1">Audi</option>
+                  <option value="2">BMW</option>
+                  <option value="3">Citroen</option>
+                  <option value="4">Ford</option>
+                  <option value="5">Honda</option>
+                  <option value="6">Jaguar</option>
+                  <option value="7">Land Rover</option>
+                  <option value="8">Mercedes</option>
+                  <option value="9">Mini</option>
+                  <option value="10">Nissan</option>
+                  <option value="11">Toyota</option>
+                  <option value="12">Volvo</option>
+                </select>
+            </div>
+              <br><br>
+              <button type="button" id="btnSend" class="submit">Enviar</button>
+            </form>
+            <br>
+            <div class="buttonsEventsDiv">
+                <button type="button" class="deleteButton" id="btnClearAll">Borrar todos los registros</button>
+                <button type="button" class="deleteButton" id="btnClear">Borrar un registro</button><br>
+            </div>
+            <div id="div1">Usuarios registrados:
+                <div id="registers"></div> 
+            </div><br>
+        </div>
+    </body>
+</html>
+
+<script type="text/javascript">
+    function checkCamp(inputElement) {
+        if (inputElement.value == '') {
+            inputElement.style.backgroundColor = "red";
+            }
+            else {
+                inputElement.style.backgroundColor = "green";
+            }
+        }
+
+    function isVerifyCamps(inputElementName, inputElementEmail, inputElementPass) {
+        if(inputElementName.style.backgroundColor == 'green' && inputElementEmail.style.backgroundColor == 'green' && inputElementPass.style.backgroundColor == 'green') {
+            
+            var newUser = document.createElement("div");
+            var addName = document.createTextNode("Usuario: ".concat(inputElementName.value));
+            var addEmail = document.createTextNode(" ; Correo: ".concat(inputElementEmail.value));
+            newUser.appendChild(addName);
+            newUser.appendChild(addEmail);  
+             var usersListDiv = document.getElementById("registers");
+             usersListDiv.appendChild(newUser);
+  
+        } else {
+            alert('Error al registrar un usuario');
+        }
+    }
+
+    //MARK: Events:
+    function inicializar() {
+        var btnClearAll = document.getElementById("btnClearAll");
+        var btnSend = document.getElementById("btnSend");
+        var btnClear = document.getElementById("btnClear");
+
+        btnClearAll.addEventListener("click",btnClearAllRegister);
+        btnSend.addEventListener("click",btnSendRegister);
+        btnClear.addEventListener("click", btnClearRegister);
+    }
+
+    function btnClearAllRegister(){
+        var registers = document.getElementById('registers');
+        while (registers.firstChild) {
+            registers.removeChild(registers.firstChild);
+        }
+    }
+
+    function btnClearRegister() {
+        var registers = document.getElementById('registers');
+            registers.removeChild(registers.firstChild);
+    }
+
+    function btnSendRegister() {
+        var inputName = document.getElementById("name");
+        var inputEmail = document.getElementById('email');
+        var inputPass = document.getElementById('password');
+        checkCamp(inputName);
+        checkCamp(inputEmail);
+        checkCamp(inputPass);
+        isVerifyCamps(inputName, inputEmail, inputPass);
+    }
+</script>
